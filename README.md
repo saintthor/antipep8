@@ -10,8 +10,11 @@ When flake8 is pressed to my git, I can not add a space that offends pep8. It ra
 And how to get it back? Now, I write a tool to convert code from pep8 to better styles. For me, a better style is to add spaces in parenthese and braces.
 
 f(a, b, c) #bad
+
 f( a, b, c ) #good
+
 f( ( a, ), b ) #bad
+
 f(( a, ), b ) #good
 
 I can covert the code to my style after pulling, edit it happily, convert it back and throw it to the leaders. Problems are solved. Life is good.
