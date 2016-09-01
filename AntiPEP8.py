@@ -19,22 +19,23 @@ def Convert( path ):
         for tk in tokenize.generate_tokens( f.readline ):
             # print tk, delta
             NewDelta = 0
-            if tk[:2] == ( 4, '\n' ):
+            head = tk[:2]
+            if head == ( 4, '\n' ):
                 delta = 0
-            elif tk[:2] == ( 51, '(' ):
+            elif head == ( 51, '(' ):
                 if LastToken[:2] == ( 51, '(' ):
                     delta -= 1
                 NewDelta = 1
-            elif tk[:2] == ( 51, ')' ):
+            elif head == ( 51, ')' ):
                 if LastToken[:2] == ( 51, '(' ):
                     delta -= 1
                 elif LastToken[:2] != ( 51, ')' ):
                     delta += 1
-            elif tk[:2] == ( 51, '{' ):
+            elif head == ( 51, '{' ):
                 NewDelta = ( 1, 0 )[LastToken[:2] == ( 51, '{' )]
-            elif tk[:2] == ( 51, '}' ):
+            elif head == ( 51, '}' ):
                 delta += ( 1, -1 )[LastToken[:2] == ( 51, '{' )]
-            elif tk[:2] in (( 51, '=' ), ( 51, '==' )) and LastToken[3][1] == tk[2][1]:
+            elif head in (( 51, '=' ), ( 51, '==' )) and LastToken[3][1] == tk[2][1]:
                 delta += 1
 
             if LastToken[:2] in (( 51, '=' ), ( 51, '==' )) and LastToken[3][1] == tk[2][1]:
@@ -48,7 +49,7 @@ def Convert( path ):
             LastToken = tk
 
             if delta != 0:
-                tk = tk[:2] + (( tk[2][0], tk[2][1] + delta ), ( tk[3][0], tk[3][1] + delta ), tk[4] )
+                tk = head + (( tk[2][0], tk[2][1] + delta ), ( tk[3][0], tk[3][1] + delta ), tk[4] )
             delta += NewDelta
             tokens.append( tk )
 
